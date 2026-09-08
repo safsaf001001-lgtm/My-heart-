@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>หัวใจของฉัน ❤️</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #18000d, #52002d);
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+/* พื้นที่ตรงกลาง */
+.container {
+    position: absolute;
+    top: 38%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+/* ❤️ หัวใจใหญ่ */
+.heart {
+    width: 110px;
+    height: 110px;
+    background: #ff2f68;
+    transform: rotate(-45deg);
+    position: relative;
+    cursor: pointer;
+    margin: auto;
+    box-shadow:
+        0 0 25px #ff2f68,
+        0 0 60px rgba(255, 47, 104, 0.7);
+
+    animation: beat 1s infinite;
+}
+
+.heart::before,
+.heart::after {
+    content: "";
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    background: #ff2f68;
+    border-radius: 50%;
+}
+
+.heart::before {
+    top: -55px;
+    left: 0;
+}
+
+.heart::after {
+    top: 0;
+    left: 55px;
+}
+
+@keyframes beat {
+    0%, 100% {
+        transform: rotate(-45deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(-45deg) scale(1.12);
+    }
+}
+
+/* ข้อความ */
+.message {
+    margin-top: 75px;
+    font-size: 27px;
+    font-weight: bold;
+
+    opacity: 0;
+    transform: translateY(25px);
+
+    transition:
+        opacity 1s ease,
+        transform 1s ease;
+
+    text-shadow:
+        0 0 10px rgba(255,255,255,0.8);
+}
+
+.message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ❤️ หัวใจเล็ก */
+.small-heart {
+    position: fixed;
+    bottom: 0;
+
+    font-size: 20px;
+    pointer-events: none;
+
+    animation:
+        floatUp var(--time) ease-out forwards;
+}
+
+@keyframes floatUp {
+
+    0% {
+        opacity: 0;
+        transform:
+            translate(0, 0)
+            scale(0.5)
+            rotate(0deg);
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 0;
+        transform:
+            translate(var(--move), -100vh)
+            scale(1.4)
+            rotate(360deg);
+    }
+}
+
+/* ข้อความแนะนำ */
+.hint {
+    margin-top: 18px;
+    font-size: 14px;
+    opacity: 0.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="heart" onclick="showLove()"></div>
+
+    <div id="message" class="message">
+        ขอให้มีความสุขมากๆ💯
+    </div>
+
+    <div class="hint">
+        กดที่หัวใจ ❤️
+    </div>
+
+</div>
+
+<script>
+
+function showLove() {
+
+    // แสดงข้อความและค้างไว้
+    const message = document.getElementById("message");
+
+    message.classList.add("show");
+
+
+    // สร้างหัวใจเล็ก ๆ จำนวนมาก
+    for (let i = 0; i < 35; i++) {
+
+        const heart = document.createElement("div");
+
+        heart.className = "small-heart";
+        heart.innerHTML = "❤️";
+
+        // ตำแหน่งเริ่มต้นแบบสุ่ม
+        heart.style.left =
+            (Math.random() * 100) + "vw";
+
+        // ขนาดสุ่ม
+        heart.style.fontSize =
+            (12 + Math.random() * 20) + "px";
+
+        // ความเร็วสุ่ม
+        heart.style.setProperty(
+            "--time",
+            (2.5 + Math.random() * 2.5) + "s"
+        );
+
+        // ให้ลอยซ้าย-ขวาแบบสุ่ม
+        heart.style.setProperty(
+            "--move",
+            ((Math.random() - 0.5) * 250) + "px"
+        );
+
+        // ให้แต่ละดวงเริ่มไม่พร้อมกัน
+        heart.style.animationDelay =
+            (Math.random() * 0.8) + "s";
+
+        document.body.appendChild(heart);
+
+
+        // ลบออกหลังจากเล่นแอนิเมชัน
+        setTimeout(() => {
+            heart.remove();
+        }, 6000);
+    }
+}
+
+</script>
+
+</body>
+</html>
